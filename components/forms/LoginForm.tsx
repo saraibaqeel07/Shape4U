@@ -62,9 +62,9 @@ const LoginForm = () => {
                         error={errors.password}
                         onChange={(e: any) => handleChange("password", e.target.value)} />
 
-                    <div className='text-right'>
+                    {/* <div className='text-right'>
                         <p className='italic underline font-bold text-[10px]'>Forgot Password</p>
-                    </div>
+                    </div> */}
                 </div>
 
                 <Button variant='primary' onClick={handleSubmit} disabled={loading} className='w-full mt-4'>
