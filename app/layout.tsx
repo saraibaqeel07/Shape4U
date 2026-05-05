@@ -12,6 +12,9 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "ShapeUp4Life",
   description: "A 12-Week Structured Weight Management Programme",
+  icons: {
+    icon: '/assets/logo.png',
+  },
 };
 
 export default function RootLayout({

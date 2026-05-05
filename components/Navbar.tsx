@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./ui/Button";
 import { User, Menu, X } from "lucide-react";
 import { nav_list } from "@/constants/generic";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 
 const Navbar = () => {
@@ -13,6 +14,7 @@ const Navbar = () => {
   const [active, setActive] = useState("home");
 
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const handleScroll = (id:any) => {
     const el = document.querySelector(id);
     if (el) {
@@ -85,12 +87,18 @@ return (
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-3">
         <div className="hidden md:block">
-          <Button onClick={()=>router.push("/login")} variant="primary">
-            <div className="w-8 h-8 border rounded-full flex items-center justify-center">
-              <User size={16} />
-            </div>
-            <p>Login / Sign Up</p>
-          </Button>
+          {isAuthenticated ? (
+            <Button onClick={() => router.push("/dashboard")} variant="primary">
+              <p>Go to Dashboard</p>
+            </Button>
+          ) : (
+            <Button onClick={() => router.push("/login")} variant="primary">
+              <div className="w-8 h-8 border rounded-full flex items-center justify-center">
+                <User size={16} />
+              </div>
+              <p>Login / Sign Up</p>
+            </Button>
+          )}
         </div>
 
         {/* MENU BUTTON */}
@@ -122,12 +130,18 @@ return (
         ))}
 
         <div className="mt-2">
-          <Button onClick={()=>router.push("/login")} variant="primary">
-            <div className="w-8 h-8 border rounded-full flex items-center justify-center">
-              <User size={16} />
-            </div>
-            <p>Login / Sign Up</p>
-          </Button>
+          {isAuthenticated ? (
+            <Button onClick={() => router.push("/dashboard")} variant="primary">
+              <p>Go to Dashboard</p>
+            </Button>
+          ) : (
+            <Button onClick={() => router.push("/login")} variant="primary">
+              <div className="w-8 h-8 border rounded-full flex items-center justify-center">
+                <User size={16} />
+              </div>
+              <p>Login / Sign Up</p>
+            </Button>
+          )}
         </div>
       </div>
     </div>

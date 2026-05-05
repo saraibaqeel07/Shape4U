@@ -28,8 +28,8 @@ const TargetCard = (item: TargetProps) => {
                 </span>
             </div>
 
-            <div className='p-1.5 md:p-2.5 max-w-fit rounded-full bg-white text-[7px] md:text-[8px]'>
-                <p className='text-black'>{item.description}</p>
+            <div className='p-1.5 md:p-2.5 max-w-full rounded-full bg-white text-[7px] md:text-[8px]'>
+                <p className='text-black text-[10px]'>{item.description}</p>
             </div>
         </div>
     )

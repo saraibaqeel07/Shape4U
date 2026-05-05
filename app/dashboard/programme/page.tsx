@@ -50,6 +50,9 @@ const ProgrammePage = () => {
                 isUnlocked={week.isUnlocked}
                 isCompleted={week.isCompleted}
                 isCurrent={week.isCurrent}
+                hasWeightEntry={week.hasWeightEntry}
+                pdfAvailable={week.pdfAvailable}
+                unlockDate={week.unlockDate}
               />
             ))}
           </div>

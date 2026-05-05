@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import ApiServices from '@/services/Apis';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 const PreScreenForm = () => {
   const router = useRouter();
+  const { logout } = useAuth();
   const [form, setForm] = useState<{ startDate: string; heightCm: number | ""; startingWeightKg: number | "" }>({ startDate: "", heightCm: "", startingWeightKg: "" });
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ const PreScreenForm = () => {
         heightCm: Number(form.heightCm),
         startingWeightKg: Number(form.startingWeightKg),
       });
-      localStorage.removeItem("token");
+      logout();
       toast.success("Profile complete! You can now log in.");
       router.push("/login");
     } catch (err: any) {

@@ -30,9 +30,11 @@ const LoginForm = () => {
         try {
             setLoading(true);
             const data = await ApiServices.Login(form);
-            login(data?.user || data, data?.token || data?.accessToken);
+            const user = data?.user || data;
+            const needsOnboarding = data?.needsOnboarding ?? user?.needsOnboarding ?? false;
+            login(user, data?.token || data?.accessToken, needsOnboarding);
             toast.success("Login successful! Welcome back.");
-            router.push("/dashboard");
+            router.push(needsOnboarding ? "/prescreen" : "/dashboard");
             setForm({ email: "", password: "" });
         } catch (err: any) {
             toast.error(err?.message || "Login failed. Please try again.");

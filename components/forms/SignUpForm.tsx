@@ -7,10 +7,12 @@ import { validateSignup } from "@/lib/validations/auth";
 import { useRouter } from "next/navigation";
 import ApiServices from "@/services/Apis";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 
 const SignupForm = () => {
   const router = useRouter();
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", password: "" });
+  const { login } = useAuth();
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
@@ -29,9 +31,9 @@ const SignupForm = () => {
     try {
       setLoading(true);
       const data = await ApiServices.Signup(form);
-      if (data?.token || data?.accessToken) {
-        localStorage.setItem("token", data?.token || data?.accessToken);
-      }
+      const user = data?.user || data;
+      const needsOnboarding = data?.needsOnboarding ?? user?.needsOnboarding ?? true;
+      login(user, data?.token || data?.accessToken, needsOnboarding);
       toast.success("Account created! Please complete your profile.");
       router.push("/prescreen");
     } catch (err: any) {
@@ -74,6 +76,14 @@ const SignupForm = () => {
           value={form.password}
           onChange={(e: any) => handleChange("password", e.target.value)}
           error={errors.password}
+        />
+        <Input
+          label="Confirm Password"
+          type="password"
+          placeholder="********"
+          value={form.confirmPassword}
+          onChange={(e: any) => handleChange("confirmPassword", e.target.value)}
+          error={errors.confirmPassword}
         />
       </div>
 

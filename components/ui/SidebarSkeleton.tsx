@@ -92,9 +92,9 @@ export default function SidebarSkeleton({ isOpen, onClose,onOpen, sidebarItems }
 
         {/* NAV */}
         <nav className="px-3 py-4 ">
-          {sidebarItems?.map((group) => {
+          {sidebarItems?.map((group, index) => {
             return (
-              <div key={group.section} className={`flex flex-col ${isOpen ? 'items-left' : 'items-center'}`}>
+              <div key={group.section ?? index} className={`flex flex-col ${isOpen ? 'items-left' : 'items-center'}`}>
                 <p className=" mb-2 text-[12px] leading-4 text-muted ">
                   {group.section}
                 </p>

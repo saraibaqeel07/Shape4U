@@ -70,6 +70,7 @@ const Button: React.FC<ButtonProps> = ({
         ${weight == "medium" ? " font-bold" : "font-bold"}
         transition-all duration-150 ease-out
         active:scale-[0.96]
+        disabled:opacity-50 disabled:cursor-not-allowed
         ${style}
       `}
     >

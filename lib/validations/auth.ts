@@ -3,6 +3,7 @@ export const validateSignup = (form: {
   lastName: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }) => {
   const errors: any = {};
 
@@ -15,6 +16,12 @@ export const validateSignup = (form: {
 
   if (form.password.length < 6) {
     errors.password = "Minimum 6 characters";
+  }
+
+  if (!form.confirmPassword) {
+    errors.confirmPassword = "Please confirm your password";
+  } else if (form.password !== form.confirmPassword) {
+    errors.confirmPassword = "Passwords do not match";
   }
 
   return errors;

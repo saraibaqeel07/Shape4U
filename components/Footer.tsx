@@ -45,7 +45,7 @@ const Footer = () => {
       </div>
 
       <div className="px-[5%] bg-green flex flex-col md:flex-row py-3 md:py-0 items-center justify-between h-auto md:h-[57px] text-[10px] md:text-[14px] text-white font-semibold">
-        <p>©2025 ShapeUp-4Life. All rights reserved.</p>
+      <p>©{new Date().getFullYear()} ShapeUp-4Life. All rights reserved.</p>
         <Link href="/privacy-policy" className="hover:opacity-80 transition">
           Privacy Policy
         </Link>

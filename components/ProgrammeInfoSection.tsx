@@ -87,6 +87,7 @@ const ProgrammeInfoSection = () => {
                 alt="programme"
                 width={400}
                 height={400}
+                priority
                 className="w-full h-full object-cover"
               />
             </div>
@@ -110,6 +111,7 @@ const ProgrammeInfoSection = () => {
                 alt="programme"
                 width={400}
                 height={400}
+                priority
                 className="w-full h-full object-cover"
               />
             </div>
@@ -133,6 +135,7 @@ const ProgrammeInfoSection = () => {
                 alt="programme"
                 width={400}
                 height={400}
+                priority
                 className="w-full h-full object-cover"
               />
             </div>

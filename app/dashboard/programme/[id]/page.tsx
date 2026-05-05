@@ -177,7 +177,7 @@ const ProgrammeIdPage = () => {
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setWeightKg(e.target.value === "" ? "" : Number(e.target.value))}
                 />
                 <div className='flex justify-end'>
-                    <Button variant='blue' className='w-full md:!w-1/4' onClick={handleWeightSubmit} disabled={weightLoading}>
+                    <Button variant='blue' className='w-full md:!w-1/4' onClick={handleWeightSubmit} disabled={weightLoading || isCompleted}>
                         {weightLoading ? "Submitting..." : "Submit Weight"}
                     </Button>
                 </div>
@@ -217,7 +217,7 @@ const ProgrammeIdPage = () => {
                     />
                 </div>
                 <div className='w-full flex flex-col items-end mt-6 gap-3'>
-                    <Button variant='primary' className='w-full md:!w-1/4' onClick={handleReflectionSubmit} disabled={reflectionLoading}>
+                    <Button variant='primary' className='w-full md:!w-1/4' onClick={handleReflectionSubmit} disabled={reflectionLoading || isCompleted}>
                         {reflectionLoading ? "Submitting..." : "Submit Reflection"}
                     </Button>
                     <Button variant='red' className='w-full md:!w-1/4' onClick={handleCompleteWeek} disabled={completeLoading || isCompleted}>

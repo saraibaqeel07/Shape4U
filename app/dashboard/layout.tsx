@@ -17,17 +17,20 @@ export const sidebarItems = [
 ];
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isLoading) return;
+    if (!isAuthenticated) {
       router.replace("/login");
+    } else if (user?.needsOnboarding) {
+      router.replace("/prescreen");
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, user, router]);
 
-  if (isLoading || !isAuthenticated) return null;
+  if (isLoading || !isAuthenticated || user?.needsOnboarding) return null;
 
   return (
     <div className="flex overflow-y-auto md:gap-4 h-screen bg-white p-2">
