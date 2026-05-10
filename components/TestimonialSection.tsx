@@ -1,22 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "./ui/Button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const testimonials = [
   {
     name: "James L.",
+    image: "/assets/person1.jpg",
     text: `"ShapeUp4Life helped me understand my body and build habits I can stick to. I lost 6 kg in 12 weeks and feel more confident than ever!"`,
   },
   {
     name: "Sarah M.",
+    image: "/assets/person1.jpg",
     text: `"This programme changed my daily routine completely. I feel more energetic and in control of my health."`,
   },
   {
     name: "Ali R.",
+    image: "/assets/person.jpg",
     text: `"Simple, practical, and effective. I finally found something that actually works long-term."`,
   },
 ];
@@ -24,117 +26,104 @@ const testimonials = [
 const TestimonialSection = () => {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState("right");
   const [animate, setAnimate] = useState(false);
 
-  const changeSlide = (newIndex:any, dir:any) => {
-    setDirection(dir);
+  const changeSlide = (newIndex: number) => {
+    if (newIndex === activeIndex) return;
     setAnimate(true);
-
     setTimeout(() => {
       setActiveIndex(newIndex);
       setAnimate(false);
-    }, 200); // exit animation time
+    }, 200);
   };
 
-  const nextSlide = () => {
-    const newIndex = (activeIndex + 1) % testimonials.length;
-    changeSlide(newIndex, "right");
-  };
-
-  const prevSlide = () => {
-    const newIndex =
-      activeIndex === 0 ? testimonials.length - 1 : activeIndex - 1;
-    changeSlide(newIndex, "left");
-  };
+  const { name, image, text } = testimonials[activeIndex];
 
   return (
-    <div className="flex flex-col items-center py-10">
-      <div className="max-w-fit flex flex-col md:flex-row items-center md:items-start gap-4">
+    <section className="relative w-full py-12 md:py-16 px-[5%] bg-white overflow-hidden">
 
-        {/* LEFT */}
-        <div className="flex flex-col items-center">
-          <div className="w-[240px] z-10 h-[240px] overflow-hidden rounded-full border-[13px] border-green">
+      {/* Heading */}
+      <h3
+        className="text-center text-[30px] md:text-[42px] mb-10"
+        style={{ fontFamily: "ArialRounded" }}
+      >
+        Testimonials
+      </h3>
+
+      {/* Quote area */}
+      <div className="relative max-w-2xl mx-auto">
+
+        {/* Opening decorative quote — top left */}
+        <Image
+          src="/assets/leftComa.png"
+          alt=""
+          width={80}
+          height={80}
+          className="absolute -top-4 -left-2 md:-left-6 w-14 md:w-20 select-none"
+          aria-hidden
+        />
+
+        {/* Centered testimonial content */}
+        <div
+          className={`flex flex-col items-center text-center gap-4 px-10 md:px-16 transition-opacity duration-200 ${
+            animate ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          {/* Avatar */}
+          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 shrink-0">
             <Image
-              src={"/assets/person1.jpg"}
-              alt="person"
-              width={300}
-              height={300}
+              src={image}
+              alt={name}
+              width={64}
+              height={64}
               className="w-full h-full object-cover"
             />
           </div>
 
-          <div className="text-[22px] -mt-8 pt-10 rounded-[22px] font-bold bg-green p-3">
-            {testimonials[activeIndex].name}
-          </div>
-        </div>
-
-        {/* RIGHT */}
-        <div className="w-[90%] flex-wrap lg:w-[610px] flex flex-col items-center md:items-start space-y-6">
-
-          {/* ✨ Animated Text */}
+          {/* Name */}
           <p
-            className={`text-[20px] md:text-[24px] lg:text-[30px] italic transition-all duration-300 ${
-              animate
-                ? direction === "right"
-                  ? "-translate-x-10 opacity-0"
-                  : "translate-x-10 opacity-0"
-                : "translate-x-0 opacity-100"
-            }`}
+            className="text-[#1F7FB6] font-bold text-[15px] md:text-[16px]"
+            style={{ fontFamily: "ArialRounded" }}
           >
-            {testimonials[activeIndex].text}
+            {name}
           </p>
 
-          {/* DOTS */}
-          <div className="flex items-center gap-1.5">
-            {testimonials.map((_, index) => (
+          {/* Quote text */}
+          <p className="italic text-[15px] md:text-[18px] text-gray-700 leading-relaxed">
+            {text}
+          </p>
+
+          {/* Dot indicators */}
+          <div className="flex items-center gap-1.5 mt-1">
+            {testimonials.map((_, i) => (
               <button
-                key={index}
-                onClick={() =>
-                  changeSlide(
-                    index,
-                    index > activeIndex ? "right" : "left"
-                  )
-                }
+                key={i}
+                onClick={() => changeSlide(i)}
+                aria-label={`Testimonial ${i + 1}`}
                 className={`rounded-full transition-all duration-300 ${
-                  index === activeIndex
+                  i === activeIndex
                     ? "w-5 h-2 bg-[#2F80ED]"
                     : "w-2 h-2 bg-[#AFCBFF]"
                 }`}
               />
             ))}
           </div>
-
-          {/* BUTTONS */}
-          <div className="flex items-center gap-3">
-            <Button onClick={()=>router.push("/signup")} variant="primary" className="w-[180px]">
-              Create Account
-            </Button>
-
-            <Button onClick={()=>router.push("/login")} variant="blue" className="w-[180px]">
-              Log In
-            </Button>
-          </div>
-
-          {/* ARROWS */}
-          {/* <div className="flex items-center gap-4 mt-4">
-            <button
-              onClick={prevSlide}
-              className="w-[40px] h-[40px] md:w-[59px] md:h-[59px] rounded-full bg-[#1F7FB6] flex items-center justify-center shadow-[5px_4px_0px_#000]"
-            >
-              <ArrowLeft className="w-5 h-5 md:w-8 md:h-8 text-white" />
-            </button>
-
-            <button
-              onClick={nextSlide}
-              className="w-[40px] h-[40px] md:w-[59px] md:h-[59px] rounded-full bg-[#1F7FB6] flex items-center justify-center shadow-[5px_4px_0px_#000]"
-            >
-              <ArrowRight className="w-5 h-5 md:w-8 md:h-8 text-white" />
-            </button>
-          </div> */}
         </div>
+
+        {/* Closing decorative quote — bottom right */}
+        <Image
+          src="/assets/rightComa.png"
+          alt=""
+          width={80}
+          height={80}
+          className="absolute -bottom-8 -right-2 md:-right-6 w-14 md:w-20 select-none"
+          aria-hidden
+        />
       </div>
-    </div>
+
+     
+
+    </section>
   );
 };
 
